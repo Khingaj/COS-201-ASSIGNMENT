@@ -1,7 +1,8 @@
 def compute_tax(status, income):
     tax = 0
+    previous = 0
 
-    if status == 0:  # Single
+    if status == 0:
         brackets = [
             (8350, 0.10),
             (33950, 0.15),
@@ -10,8 +11,7 @@ def compute_tax(status, income):
             (372950, 0.33),
             (float('inf'), 0.35)
         ]
-
-    elif status == 1:  # Married Filing Jointly
+    elif status == 1:
         brackets = [
             (16700, 0.10),
             (67900, 0.15),
@@ -20,8 +20,7 @@ def compute_tax(status, income):
             (372950, 0.33),
             (float('inf'), 0.35)
         ]
-
-    elif status == 2:  # Married Filing Separately
+    elif status == 2:
         brackets = [
             (8350, 0.10),
             (33950, 0.15),
@@ -30,8 +29,7 @@ def compute_tax(status, income):
             (186475, 0.33),
             (float('inf'), 0.35)
         ]
-
-    elif status == 3:  # Head of Household
+    elif status == 3:
         brackets = [
             (11950, 0.10),
             (45500, 0.15),
@@ -40,12 +38,9 @@ def compute_tax(status, income):
             (372950, 0.33),
             (float('inf'), 0.35)
         ]
-
     else:
         print("Invalid filing status")
         return 0
-
-    previous = 0
 
     for limit, rate in brackets:
         if income > limit:
@@ -58,7 +53,6 @@ def compute_tax(status, income):
     return tax
 
 
-# -------- MAIN PROGRAM --------
 print("Filing Status")
 print("0 - Single")
 print("1 - Married Filing Jointly / Qualifying Widow(er)")
