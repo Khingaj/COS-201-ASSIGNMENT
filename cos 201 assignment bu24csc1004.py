@@ -1,31 +1,38 @@
 def compute_tax(status, income):
-    # Tax brackets for 2009
-    brackets = {
-        0: [  # Single
+    tax = 0
+
+    if status == 0:  # Single
+        brackets = [
             (8350, 0.10),
             (33950, 0.15),
             (82250, 0.25),
             (171550, 0.28),
             (372950, 0.33),
             (float('inf'), 0.35)
-        ],
-        1: [  # Married Filing Jointly / Qualifying Widow(er)
+        ]
+
+    elif status == 1:  # Married Filing Jointly
+        brackets = [
             (16700, 0.10),
             (67900, 0.15),
             (137050, 0.25),
             (208850, 0.28),
             (372950, 0.33),
             (float('inf'), 0.35)
-        ],
-        2: [  # Married Filing Separately
+        ]
+
+    elif status == 2:  # Married Filing Separately
+        brackets = [
             (8350, 0.10),
             (33950, 0.15),
             (68525, 0.25),
             (104425, 0.28),
             (186475, 0.33),
             (float('inf'), 0.35)
-        ],
-        3: [  # Head of Household
+        ]
+
+    elif status == 3:  # Head of Household
+        brackets = [
             (11950, 0.10),
             (45500, 0.15),
             (117450, 0.25),
@@ -33,24 +40,26 @@ def compute_tax(status, income):
             (372950, 0.33),
             (float('inf'), 0.35)
         ]
-    }
 
-    tax = 0
-    previous_limit = 0
+    else:
+        print("Invalid filing status")
+        return 0
 
-    for limit, rate in brackets[status]:
+    previous = 0
+
+    for limit, rate in brackets:
         if income > limit:
-            tax += (limit - previous_limit) * rate
-            previous_limit = limit
+            tax += (limit - previous) * rate
+            previous = limit
         else:
-            tax += (income - previous_limit) * rate
+            tax += (income - previous) * rate
             break
 
     return tax
 
 
-# ---- Main Program ----
-print("Filing Status:")
+# -------- MAIN PROGRAM --------
+print("Filing Status")
 print("0 - Single")
 print("1 - Married Filing Jointly / Qualifying Widow(er)")
 print("2 - Married Filing Separately")
@@ -61,4 +70,4 @@ income = float(input("Enter taxable income: "))
 
 tax = compute_tax(status, income)
 
-print(f"Total tax is: ${tax:.2f}")
+print("Total tax is: $", round(tax, 2))
